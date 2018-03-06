@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Testing {
     public static void main(String[] args) throws ParseException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
+        // Массив для данных из файла
         ArrayList <Friend> friendsFromFile = new ArrayList<>();
 
         File file = new File("Contacts.txt");

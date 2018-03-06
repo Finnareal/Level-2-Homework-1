@@ -9,10 +9,10 @@ public class Friend implements Serializable {
     private Date birthDate;
 
     public Friend() {
-        this.name = name;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.birthDate = birthDate;
+        //this.name = name;
+//        this.lastName = lastName;
+//        this.phone = phone;
+//        this.birthDate = birthDate;
     }
 
     private String getName() {

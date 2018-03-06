@@ -1,39 +1,54 @@
 import java.io.*;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class Testing {
-    public static void main(String[] args) throws ParseException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        FriendStorage friendStorage = new FriendStorage();
-        //Class <FriendStorage> friendStorageClass = FriendStorage.class;
+    public static void main(String[] args) throws ParseException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
+        ArrayList <Friend> friendsFromFile = new ArrayList<>();
 
-//        Constructor constructor = friendStorageClass.getDeclaredConstructor();
-//        constructor.setAccessible(true);
-//        FriendStorage friendStorage = (FriendStorage) constructor.newInstance();
-        //friendStorage.clearFriends();
+        File file = new File("Contacts.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (file.length() == 0){
+            friendsFromFile = new ArrayList<>();
+        }else {
+            try {
+                ObjectInputStream fileReader = new ObjectInputStream(new FileInputStream(file));
+                friendsFromFile = ((ArrayList<Friend>) fileReader.readObject());
+            }
+            catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
 
+        Class <FriendStorage> friendStorageClass = FriendStorage.class;
+        // получаем доступ к конструктору
+        Constructor constructor = friendStorageClass.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        FriendStorage friendStorage = (FriendStorage) constructor.newInstance();
 
+        // получаем доступ к методу getFriends
+        Method methodGetFriends = friendStorageClass.getDeclaredMethod("getFriends");
+        methodGetFriends.setAccessible(true);
 
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-//        friendStorage.addFriend("Ivan", "Popov", "222", simpleDateFormat.parse("03.10.1978"));
-//        friendStorage.addFriend("Ivan", "Popov", "222", simpleDateFormat.parse("03.10.1978"));
-//        friendStorage.addFriend("Andrey", "Minin", "333", simpleDateFormat.parse("05.05.1955"));
-//        friendStorage.addFriend("Elena", "Alimova", "444", simpleDateFormat.parse("15.08.1991"));
+        System.out.println(friendsFromFile.toString());
+        System.out.println(methodGetFriends.invoke(friendStorage).toString());
 
+        // получаем доступ к полю bestFriend
+        Field fieldFriends = friendStorageClass.getDeclaredField("bestFriend");
+        fieldFriends.setAccessible(true);
 
-        System.out.println(friendStorage.getFriends().toString());
-
-
-        //Сохраняем список контактов в файл
-//        File file = new File("Contacts.txt");
-//        try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(file))){
-//            writer.writeObject(friendStorage.getFriends());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+        System.out.println(friendStorage.isBestFriend());
+        fieldFriends.set(friendStorage, true);
+        System.out.println(friendStorage.isBestFriend());
     }
 }

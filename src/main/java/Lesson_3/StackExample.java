@@ -8,7 +8,7 @@ public class StackExample {
     private final int stackSize;
 
     public StackExample(){
-        stackExample = new LinkedList<Raid>();
+        stackExample = new LinkedList<>();
         stackSize = 4;
     }
 
@@ -17,9 +17,17 @@ public class StackExample {
             stackExample.add(raid);
         }else {
             throw new StackOverflowException("Стек переполнен!");
-            //System.out.println("Переполнение стека!");
         }
+    }
 
+    public Raid pop() throws EmptyStackException {
+        if (stackExample.isEmpty() == false){
+            Raid raidMember = stackExample.getLast();
+            stackExample.removeLast();
+            return raidMember;
+        }else {
+            throw new EmptyStackException("Стек не содержит элементов!");
+        }
     }
 
     public LinkedList<Raid> getStackExample() {

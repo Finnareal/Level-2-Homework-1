@@ -31,11 +31,13 @@ public class StackExampleTest {
         Assertions.assertThrows(EmptyStackException.class, () -> {emptyStackExample.pop();}, "Стек не содержит элементов!");
     }
 
+    //Проверяем, что методы push() и pop() работают.
     @AfterAll
     public static void afterAll() throws StackOverflowException, EmptyStackException {
         Raid raid = new Raid("Druid", "Tank");
         emptyStackExample.push(raid);
         System.out.println(emptyStackExample.getStackExample().getLast());
+        System.out.println(emptyStackExample.pop());
         System.out.println(fullStackExample.pop());
     }
 

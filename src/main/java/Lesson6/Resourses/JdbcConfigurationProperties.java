@@ -1,36 +1,32 @@
 package Lesson6.Resourses;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.ArrayList;
 
 public class JdbcConfigurationProperties implements JdbcConfiguration {
 
-    private List<String> properties;
+    private ArrayList<String> properties;
 
     public JdbcConfigurationProperties(){}
 
     public Configuration load(){
         Configuration config = new Configuration();
-        String[] dBaseName;
-        String[] host;
-        String[] port;
-        String[] userName;
-        String[] password;
+        properties = new ArrayList<>();
         try {
-            properties = Files.readAllLines(Paths.get("src/main/java/Lesson6/Resourses/Properties1.txt"));
-            dBaseName = properties.get(0).split("=");
-            host = properties.get(1).split("=");
-            port = properties.get(2).split("=");
-            userName = properties.get(3).split("=");
-            password = properties.get(4).split("=");
+            BufferedReader br = Files.newBufferedReader(Paths.get("src/main/java/Lesson6/Resourses/Properties1.txt"));
+            String line;
+            while ((line = br.readLine()) != null){
+                properties.add(line.split("=")[1]);
+            }
 
-            config.setDataBase(dBaseName[1]);
-            config.setHost(host[1]);
-            config.setPort(port[1]);
-            config.setUserName(userName[1]);
-            config.setPassword(password[1]);
+            config.setDataBase(properties.get(0));
+            config.setHost(properties.get(1));
+            config.setPort(properties.get(2));
+            config.setUserName(properties.get(3));
+            config.setPassword(properties.get(4));
 
             System.out.println(config.toString());
 

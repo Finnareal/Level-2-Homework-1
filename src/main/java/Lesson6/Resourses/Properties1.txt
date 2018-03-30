@@ -2,4 +2,4 @@ jdbc.database.name=employeers
 jdbc.host=localhost
 jdbc.port=3306
 jdbc.username=root
-jdbc.passwoed=root
+jdbc.password=root

@@ -2,36 +2,18 @@ package Lesson6.Resourses;
 
 public class Configuration {
 
-    private String dataBase;
-    private String host;
-    private String port;
+    private String url;
     private String userName;
     private String password;
 
     public Configuration(){}
 
-    public String getDataBase() {
-        return dataBase;
+    public String getUrl() {
+        return url;
     }
 
-    public void setDataBase(String dataBase) {
-        this.dataBase = dataBase;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getUserName() {
@@ -53,9 +35,7 @@ public class Configuration {
     @Override
     public String toString() {
         return "Configuration{" +
-                "dataBase='" + dataBase + '\'' +
-                ", host='" + host + '\'' +
-                ", port='" + port + '\'' +
+                "url='" + url + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';

@@ -1,7 +1,6 @@
 package Lesson6;
 
 import Lesson6.Resourses.JdbcConfigurationProperties;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class JdbcConfigurationPropertiesTest {
@@ -10,6 +9,7 @@ public class JdbcConfigurationPropertiesTest {
     public void setJdbcConfPropTest(){
         JdbcConfigurationProperties jdbcConfigProperties = new JdbcConfigurationProperties();
         jdbcConfigProperties.load();
+
     }
 
 

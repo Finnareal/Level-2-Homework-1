@@ -8,13 +8,11 @@ import java.util.ArrayList;
 
 public class JdbcConfigurationProperties implements JdbcConfiguration {
 
-    private ArrayList<String> properties;
-
     public JdbcConfigurationProperties(){}
 
     public Configuration load(){
         Configuration config = new Configuration();
-        properties = new ArrayList<>();
+        ArrayList<String> properties = new ArrayList<>();
         try {
             BufferedReader br = Files.newBufferedReader(Paths.get("src/main/java/Lesson6/Resourses/Properties1.txt"));
             String line;
@@ -22,13 +20,9 @@ public class JdbcConfigurationProperties implements JdbcConfiguration {
                 properties.add(line.split("=")[1]);
             }
 
-            config.setDataBase(properties.get(0));
-            config.setHost(properties.get(1));
-            config.setPort(properties.get(2));
+            config.setUrl("jdbc:mysql://" + properties.get(1) + ":" + properties.get(2) + "/" + properties.get(0) + "?serverTimezone=UTC");
             config.setUserName(properties.get(3));
             config.setPassword(properties.get(4));
-
-            System.out.println(config.toString());
 
         } catch (IOException e) {
             e.printStackTrace();

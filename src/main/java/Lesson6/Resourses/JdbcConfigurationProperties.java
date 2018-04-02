@@ -13,8 +13,8 @@ public class JdbcConfigurationProperties implements JdbcConfiguration {
     public Configuration load(){
         Configuration config = new Configuration();
         ArrayList<String> properties = new ArrayList<>();
-        try {
-            BufferedReader br = Files.newBufferedReader(Paths.get("src/main/java/Lesson6/Resourses/Properties1.txt"));
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("src/main/java/Lesson6/Resourses/Properties1.txt")))
+        {
             String line;
             while ((line = br.readLine()) != null){
                 properties.add(line.split("=")[1]);

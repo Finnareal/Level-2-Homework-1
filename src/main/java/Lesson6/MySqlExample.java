@@ -14,7 +14,7 @@ public class MySqlExample {
     }
 
     public static void main(String[] args) {
-        //Connection url:
+        //DatabaseConnection url:
         //jdbc:<database vendor>://<ip>:<port>/<database_name>
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeers?serverTimezone=UTC", "root", "root");
              Statement statement = connection.createStatement())
@@ -34,7 +34,5 @@ public class MySqlExample {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 }

@@ -1,5 +1,7 @@
 package Lesson6;
 
+import Lesson6.dao.SqlDepartmentDao;
+
 import java.sql.*;
 
 public class MySqlExample {
@@ -13,7 +15,7 @@ public class MySqlExample {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         //DatabaseConnection url:
         //jdbc:<database vendor>://<ip>:<port>/<database_name>
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeers?serverTimezone=UTC", "root", "root");
@@ -34,5 +36,12 @@ public class MySqlExample {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        SqlDepartmentDao sqlDepartmentDao = new SqlDepartmentDao();
+
+        sqlDepartmentDao.create(5, "HR", "Moscow");
+        sqlDepartmentDao.findAll();
+        sqlDepartmentDao.findById(3);
+        sqlDepartmentDao.delete(5);
     }
 }

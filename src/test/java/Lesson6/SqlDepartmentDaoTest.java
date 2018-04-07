@@ -30,12 +30,12 @@ public class SqlDepartmentDaoTest {
     }
 
     @Test
-    public void sqlDepartmentDaoFindAllTest() throws SQLException {
+    public void sqlDepartmentDaoFindAllTest() {
         departmentDao.findAll();
     }
 
     @Test
-    public void sqlDepartmentDaoFindByIdTest(){
+    public void sqlDepartmentDaoFindByIdTest() throws SQLException {
         departmentDao.findById(4);
     }
 }

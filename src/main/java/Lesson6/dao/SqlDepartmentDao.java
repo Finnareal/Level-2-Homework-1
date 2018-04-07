@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class SqlDepartmentDao implements DepartmentDao {
 
-    Connection sqlConnection;
+    private Connection sqlConnection;
 
     public SqlDepartmentDao() throws SQLException {
         this.sqlConnection = new JdbcConnection().getSqlConnection();
@@ -21,13 +21,13 @@ public class SqlDepartmentDao implements DepartmentDao {
     @Override
     public Department create(int id, String name, String city) throws SQLException {
 
-        Department insertedDepartment = new Department(0, "", "");
-        try (Connection sqlConnection = this.sqlConnection; Statement statement = sqlConnection.createStatement())
+        Department insertedDepartment;
+        try (Statement statement = sqlConnection.createStatement())
         {
             //Insert into department value (id, name, city)
             String sql = "insert into department value (" + id + ", " + "\"" + name + "\"" + ", " + "\"" + city + "\"" + ")";
 
-            insertedDepartment = findByIdCheck(id);
+            insertedDepartment = findById(id);
 
             //Проверяем, что такой записи еще нет
             if (insertedDepartment.getDepartmentId() == id){
@@ -41,19 +41,16 @@ public class SqlDepartmentDao implements DepartmentDao {
             insertedDepartment = findById(id);
             System.out.println("Row insert result = " + insertedDepartment);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
         return insertedDepartment;
     }
 
     @Override
     public Department update(int id, String name, String city) throws SQLException {
 
-        Department updatedDepartment = new Department(0, "", "");
-        try (Connection sqlConnection = this.sqlConnection; Statement statement = sqlConnection.createStatement())
+        Department updatedDepartment;
+        try (Statement statement = sqlConnection.createStatement())
         {
-            updatedDepartment = findByIdCheck(id);
+            updatedDepartment = findById(id);
             if (updatedDepartment.getDepartmentId() == 0){
                 throw new SQLException("No records with id = " + id + " found!");
             }else {
@@ -67,9 +64,6 @@ public class SqlDepartmentDao implements DepartmentDao {
             //Проверяем, что значения поменялись
             updatedDepartment = findById(id);
             System.out.println("Row update result = " + updatedDepartment);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return updatedDepartment;
     }
@@ -77,18 +71,14 @@ public class SqlDepartmentDao implements DepartmentDao {
     @Override
     public void delete(int id) throws SQLException {
 
-        try (Connection sqlConnection = this.sqlConnection; Statement statement = sqlConnection.createStatement())
+        try (Statement statement = sqlConnection.createStatement())
         {
             String sql = "delete from department where id = " + id;
             int result = statement.executeUpdate(sql);
             System.out.println("Rows affected = " + result);
             if (result == 0){
-                //throw new SQLException("No records with id = " + id + " found!");
-                System.out.println("No records with id = " + id + " found!");
+                throw new SQLException("No records with id = " + id + " found!");
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -96,7 +86,7 @@ public class SqlDepartmentDao implements DepartmentDao {
     public Collection<Department> findAll() {
         ArrayList<Department> result = new ArrayList<>();
 
-        try (Connection sqlConnection = this.sqlConnection; Statement statement = sqlConnection.createStatement())
+        try (Statement statement = sqlConnection.createStatement())
         {
             //Find all records from department
             String sql = "select * from department";
@@ -119,10 +109,10 @@ public class SqlDepartmentDao implements DepartmentDao {
     }
 
     @Override
-    public Department findById(int id){
+    public Department findById(int id) throws SQLException {
         Department department = new Department(0, "", "");
 
-        try (Connection sqlConnection = this.sqlConnection; Statement statement = sqlConnection.createStatement())
+        try (Statement statement = sqlConnection.createStatement())
         {
             //Find from department where "id" = id
             String sql = "select * from department where id = " + id;
@@ -135,32 +125,6 @@ public class SqlDepartmentDao implements DepartmentDao {
                 department.setName(resultSet.getString("name"));
                 department.setCity(resultSet.getString("city"));
             }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(department.toString());
-        return department;
-    }
-
-    private Department findByIdCheck(int id) throws SQLException {
-        Department department = new Department(0, "", "");
-        Connection sqlConnection = this.sqlConnection;
-        Statement statement = sqlConnection.createStatement();
-        try
-        {
-            //Find from department where "id" = id
-            String sql = "select * from department where id = " + id;
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()){
-                department.setDepartmentId(resultSet.getInt("id"));
-                department.setName(resultSet.getString("name"));
-                department.setCity(resultSet.getString("city"));
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
         }
         System.out.println(department.toString());
         return department;

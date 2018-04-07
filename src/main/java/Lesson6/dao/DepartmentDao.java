@@ -21,5 +21,5 @@ public interface DepartmentDao {
     Collection<Department> findAll();
 
     //Поиск по ID
-    Department findById(int id);
+    Department findById(int id) throws SQLException;
 }

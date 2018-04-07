@@ -5,19 +5,19 @@
 <hibernate-configuration>
     <session-factory>
 
-        <property name="hibernate.databaseConnection.driver_class">
+        <property name="hibernate.connection.driver_class">
             com.mysql.cj.jdbc.Driver
         </property>
 
-        <property name="hibernate.databaseConnection.url">
+        <property name="hibernate.connection.url">
             jdbc:mysql://localhost:3306/employeers?serverTimezone=UTC
         </property>
 
-        <property name="hibernate.databaseConnection.username">
+        <property name="hibernate.connection.username">
             root
         </property>
 
-        <property name="hibernate.databaseConnection.password">
+        <property name="hibernate.connection.password">
             root
         </property>
 
@@ -25,11 +25,15 @@
             org.hibernate.dialect.MySQL57Dialect
         </property>
 
-        <property name="hbmddl2.auto">
+        <property name="hibernate.hbm2ddl.auto">
             create
         </property>
 
-        <mapping class="src.main.java.Lesson7.Department"></mapping>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <mapping class="Lesson7.Department"/>
+        <mapping class="Lesson7.DepartmentInfo"/>
 
     </session-factory>
 

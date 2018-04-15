@@ -3,6 +3,9 @@ package Lesson7;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Created by Student-17 on 30.03.2018.
+ */
 @Entity
 @Table (name = "DEPARTMENT_INFO")
 public class DepartmentInfo implements Serializable {

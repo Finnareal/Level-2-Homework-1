@@ -25,6 +25,6 @@ public class HibernateExample {
         department.setCity("Moscow");
 
         transaction.commit();
-        session.close(); //состояние объекта Department - detached
+        session.close(); //состояние объекта Department - detached - не связан с БД, не управляется Hibernate'ом.
     }
 }

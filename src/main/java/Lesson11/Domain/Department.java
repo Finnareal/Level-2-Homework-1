@@ -1,6 +1,10 @@
-package Lesson7;
+package Lesson11.Domain;
+
+import Lesson11.City;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 //Указывает, что класс соответствует таблице Department в БД
 @Entity
@@ -11,23 +15,20 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
 
-    @Column(name = "department_name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false, length = 50)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "city", nullable = false)
-    private String city;
+    private City city;
 
-    @OneToOne(mappedBy = "department") //Название поля, по которому связываем таблицы
-    private DepartmentInfo info;
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.PERSIST, CascadeType.MERGE})  //(targetEntity = Employee.class)
+    private Set<Employee> employees = new HashSet<>();
 
     public Department(){}
-
-    public Department(String name, String city){
-        this.name = name;
-        this.city = city;
-    }
 
     public int getId() {
         return id;
@@ -45,19 +46,15 @@ public class Department {
         this.name = name;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
-    public DepartmentInfo getInfo() {
-        return info;
-    }
-
-    public void setInfo(DepartmentInfo info) {
-        this.info = info;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 }
